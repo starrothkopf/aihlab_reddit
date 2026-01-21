@@ -1,0 +1,11 @@
+
+
+summary
+total entries: 671,982
+submissions: 181,320
+comments: 490,662
+date range: 2022-01-22 23:56:21 to 2025-06-30 23:59:34
+unique authors: 268,737
+metadata columns: 38
+
+columns: type, id, title, selftext, author, author_flair_text, created_utc, created_date, subreddit, score, upvote_ratio, num_comments, url, permalink, is_self, is_original_content, over_18, spoiler, locked, stickied, distinguished, edited, link_flair_text, domain, gilded, name, full_link, model_detected, detection_text, link_id, parent_id, body, is_submitter, controversiality, year_month, year, text_for_count, word_count
