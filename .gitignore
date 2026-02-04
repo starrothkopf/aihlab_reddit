@@ -7,7 +7,8 @@
 zed/
 pushshift_working/
 pushshift_2025_zst_unfiltered/
-pushshift_25_json/
+pushshift_25_01_06_json/
+pushshift_25_07_12_json/
 pushshift_22_24_json/
 pushshift_22_24_zst/
 praw_supplemental_corpus/
@@ -15,3 +16,15 @@ old_praw/
 old_csv_output_data/
 old_code/
 08/
+09/
+10/
+11/
+12/
+logs/
+combined_corpus.ndjson
+combined_corpus_with_deps_sm.ndjson
+combined_corpus_with_deps_lg.ndjson
+pushshift_raw_huge/
+pushshift_corpus/
+corpus_readable.csv
+pos_analysis/

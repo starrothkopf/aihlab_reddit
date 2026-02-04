@@ -7,8 +7,8 @@ from collections import defaultdict
 import re
 from pathlib import Path
 
-INPUT_FOLDER = "pushshift_22_24_zst/"  # folder containing all .zst files
-OUTPUT_FOLDER = "new_pushshift_22_24_json/"  # output folder for processed files
+INPUT_FOLDER = "pushshift_25_07_zst_unfiltered/"  # folder containing all .zst files
+OUTPUT_FOLDER = "pushshift_25_07_json/"  # output folder for processed files
 START_YEAR = 2022
 
 log = logging.getLogger("reddit_filter")

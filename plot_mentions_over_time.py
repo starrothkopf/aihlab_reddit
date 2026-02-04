@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
-FOLDERS = ["pushshift_22_24_json", "pushshift_25_json"]
+FOLDERS = ["pushshift_22_24_json", "pushshift_25_01_06_json", "pushshift_25_07_12_json"]
 
 rows = []
 
