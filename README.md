@@ -1,12 +1,23 @@
 # Reddit ChatGPT Discourse Corpus Pipeline
-This repository contains the data collection pipeline used to build a corpus of 671,982 Reddit posts and comments mentioning ChatGPT models from 2022–2025. The dataset itself (several GB) is hosted on Box—this repo documents it was built and how it can be replicated.
+This repository contains the data collection pipeline used to build a corpus of 870,364 Reddit posts and comments mentioning ChatGPT models from 2022–2025. The dataset itself (several GB) is hosted on Box—this repo documents it was built and how it can be replicated.
 
 Dataset Access: https://wustl.box.com/s/m5gcaktpkp425967efffni89yccaybsd
 
 **Corpus Summary**
-Total Entries: 671,982 (181,320 submissions, 490,662 comments)
-Date Range: January 22, 2022 – June 30, 2025
-Unique Authors: 268,737
+Total records: 870,364
+Total file size (chars): 1,257,523,965 (~1.2GB)
+Total body text (chars): 263,399,485
+
+Types:
+  comment: 649,203 (74.6%)
+  submission: 221,161 (25.4%)
+
+Model detection:
+  chatgpt: 718,643 (82.6%)
+  gpt-4: 79,992 (9.2%)
+  gpt-5: 41,292 (4.7%)
+  gpt-4o: 18,325 (2.1%)
+  gpt-3.5: 12,112 (1.4%)
 Source Subreddits: r/ChatGPT, r/technology, r/ArtificialIntelligence, r/artificial
 
 Each entry is a newline-delimited JSON object with 38 fields:
