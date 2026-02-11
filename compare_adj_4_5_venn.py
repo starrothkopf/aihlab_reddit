@@ -8,7 +8,7 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 
-RESULTS_FILE = "model_adjectives_analysis_lg.json"
+RESULTS_FILE = "all_adjectives_analysis.json"
 OUTPUT_DIR = "visualizations"
 
 MODELS = ["gpt-4", "gpt-5"]
@@ -51,19 +51,21 @@ def sentiment_score(words):
     return round(np.mean(scores), 3)
 
 
-def prepare_adjective_data(results, models, top_n):
+def prepare_adjective_data(results, models, top_n, use_negated=False):
     """
     returns:
     - freq_dict[model][adj] = count
     - unique[model] = {adj}
     - common = {adj}
     """
-
+    
+    key = "top_negated_adjectives_by_model" if use_negated else "top_adjectives_by_model"
+    
     freq_dict = {}
     sets = {}
 
     for model in models:
-        items = results["top_adjectives_by_model"][model][:top_n]
+        items = results.get(key, {}).get(model, [])[:top_n]
         freq_dict[model] = {adj: count for adj, count in items}
         sets[model] = set(freq_dict[model].keys())
 
@@ -95,9 +97,9 @@ def draw_word_block(ax, words, freqs, center, title=None):
     if title:
         ax.text(center[0], center[1] + 0.32, title, ha="center", fontsize=11, fontweight="bold")
 
-def plot_venn(results, models, top_n):
-    freq_dict, unique, common = prepare_adjective_data(results, models, top_n)
-
+def plot_venn(results, models, top_n, use_negated=False):
+    freq_dict, unique, common = prepare_adjective_data(results, models, top_n, use_negated)
+    
     fig, ax = plt.subplots()
 
     ax.add_patch(plt.Circle((0.35, 0.5), 0.32, alpha=0.25, color="#2E86AB"))
@@ -161,17 +163,17 @@ def plot_venn(results, models, top_n):
     ax.axis("off")
     ax.set_aspect("equal")
 
+    suffix = "negated" if use_negated else "positive"
+    title_suffix = "(Negated)" if use_negated else ""
+    
     plt.title(
-        f"Adjective Overlap with Frequency & Sentiment\nTop {top_n} adjectives",
+        f"Adjective Overlap with Frequency & Sentiment {title_suffix}\nTop {top_n} adjectives",
         fontsize=15,
         pad=20
     )
-
-    plt.tight_layout()
-    out = f"{OUTPUT_DIR}/02_venn_weighted_frequency_sentiment_lg.png"
+    
+    out = f"{OUTPUT_DIR}/adj_broad_frequency_sentiment_{suffix}_lg.png"
     plt.savefig(out, dpi=300)
-    plt.close()
-
     print(out)
 
 def main():

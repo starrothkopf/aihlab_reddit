@@ -24,7 +24,14 @@ logs/
 combined_corpus.ndjson
 combined_corpus_with_deps_sm.ndjson
 combined_corpus_with_deps_lg.ndjson
+combined_corpus_with_deps_trf.ndjson
 pushshift_raw_huge/
 pushshift_corpus/
 corpus_readable.csv
 pos_analysis/
+model_adjectives_corpus.ndjson
+model_nouns_corpus.ndjson
+model_verbs_corpus.ndjson
+mini_corpus.ndjson
+mini_corpus_with_scores.ndjson
+mini_corpus_with_deps.ndjson
