@@ -5,7 +5,7 @@ from collections import defaultdict
 from pathlib import Path
 import logging
 
-INPUT_FILE = "mini_corpus_with_scores_deps.ndjson" 
+INPUT_FILE = "miniest_corpus.ndjson" 
 OUTPUT_FILE = "adjectives_scores_inspection.csv"
 
 log = logging.getLogger("adjective_analyzer")

@@ -25,8 +25,6 @@ model_patterns = [
     r"chat[\s-]?gpt[-\s]?4o",
     r"gpt[-\s]?4",
     r"chat[\s-]?gpt[-\s]?4",
-    r"gpt[-\s]?5o",
-    r"chat[\s-]?gpt[-\s]?5o",
     r"gpt[-\s]?5",
     r"chat[\s-]?gpt[-\s]?5",
     r"\bchat[\s-]?gpt\b",
