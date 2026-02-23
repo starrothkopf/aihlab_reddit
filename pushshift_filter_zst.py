@@ -1,271 +1,186 @@
-import zstandard
-import os
 import json
-from datetime import datetime
-import logging
-from collections import defaultdict
 import re
-from pathlib import Path
+import hashlib
+import logging
+from datetime import datetime
+from collections import defaultdict
 
-INPUT_FOLDER = "pushshift_25_07_zst_unfiltered/"  # folder containing all .zst files
-OUTPUT_FOLDER = "pushshift_25_07_json/"  # output folder for processed files
-START_YEAR = 2022
+INPUT_FILE = "combined_corpus_cleaned.ndjson"
+OUTPUT_FILE = "combined_corpus_cleaned_deduplicated.ndjson"
+DUPLICATES_FILE = "duplicates_for_inspection.ndjson"
 
-log = logging.getLogger("reddit_filter")
+log = logging.getLogger("reddit_deduper")
 log.setLevel(logging.INFO)
 handler = logging.StreamHandler()
-log_formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
-handler.setFormatter(log_formatter)
+handler.setFormatter(logging.Formatter("%(asctime)s - %(message)s"))
 log.addHandler(handler)
 
-model_patterns = [
-    r"gpt[-\s]?3\.?5",
-    r"chat[\s-]?gpt[-\s]?3\.?5",
-    r"gpt[-\s]?4o",
-    r"chat[\s-]?gpt[-\s]?4o",
-    r"gpt[-\s]?4",
-    r"chat[\s-]?gpt[-\s]?4",
-    r"gpt[-\s]?5",
-    r"chat[\s-]?gpt[-\s]?5",
-    r"\bchat[\s-]?gpt\b",
-]
-
-combined_model_regex = re.compile("|".join(model_patterns), re.IGNORECASE)
-
+GPT35_RELEASE = datetime(2022, 11, 30)
 GPT4_RELEASE = datetime(2023, 3, 14)
 GPT4O_RELEASE = datetime(2024, 5, 13)
+GPT4O_REPLACES_GPT4 = datetime(2025, 4, 30)
+GPT5_RELEASE = datetime(2025, 8, 7)
 
-def read_lines_zst(file_name):
-    """get one line of json at a time from a zst file"""
-    with open(file_name, 'rb') as fh:
-        dctx = zstandard.ZstdDecompressor(max_window_size=2**31)
-        with dctx.stream_reader(fh) as reader:
-            buffer = b""
-            while True:
-                chunk = reader.read(2**27)  # 128 MB chunks
-                if not chunk:
-                    break
-                buffer += chunk
-                lines = buffer.split(b'\n')
-                for line in lines[:-1]:
-                    yield line.decode('utf-8', errors='ignore')
-                buffer = lines[-1]
-            if buffer:
-                yield buffer.decode('utf-8', errors='ignore')
-
-
-def contains_model(text):
-    if not text:
-        return None
-
-    match = combined_model_regex.search(text)
-    if not match:
-        return None
-
-    found = match.group(0).lower()
-
-    if "3.5" in found:
-        return "gpt-3.5"
-    elif "4o" in found:
-        return "gpt-4o"
-    elif "4" in found:
-        return "gpt-4"
-    elif re.search(r"\b5\b|gpt[-\s]?5", found):
-        return "gpt-5"
+def infer_models_from_date(created_date):
+    created = datetime.strptime(created_date, "%Y-%m-%d %H:%M:%S")
+    
+    if created < GPT35_RELEASE:
+        return []  # before ChatGPT release
+    elif created < GPT4_RELEASE:
+        return ["gpt-3.5"]  # only 3.5 available
+    elif created < GPT4O_RELEASE:
+        return ["gpt-4"]  # only 4 available
+    elif created < GPT4O_REPLACES_GPT4:
+        return ["gpt-4", "gpt-4o"]  # both 4 and 4o available
+    elif created < GPT5_RELEASE:
+        return ["gpt-4o"]  # 4o has replaced 4
     else:
-        return "chatgpt"
+        return ["gpt-5"]  # GPT-5 era
 
+def get_text_content(obj):
+    if obj.get("type") == "submission":
+        title = obj.get("title", "").strip()
+        selftext = obj.get("selftext", "").strip()
+        return f"{title} {selftext}".strip()
+    else:
+        return obj.get("body", "").strip()
 
-def extract_submission_metadata(obj):
-    """get metadata from a submission"""
-    return {
-        "type": "submission",
-        "id": obj.get("id"),
-        "title": obj.get("title", ""),
-        "selftext": obj.get("selftext", ""),
-        "author": obj.get("author", "[deleted]"),
-        "author_flair_text": obj.get("author_flair_text"),
-        "created_utc": obj.get("created_utc"),
-        "created_date": datetime.utcfromtimestamp(int(obj['created_utc'])).strftime("%Y-%m-%d %H:%M:%S"),
-        "subreddit": obj.get("subreddit", ""),
-        "score": obj.get("score", 0),
-        "upvote_ratio": obj.get("upvote_ratio"),
-        "num_comments": obj.get("num_comments", 0),
-        "url": obj.get("url", ""),
-        "permalink": obj.get("permalink", ""),
-        "is_self": obj.get("is_self", False),
-        "is_original_content": obj.get("is_original_content", False),
-        "over_18": obj.get("over_18", False),
-        "spoiler": obj.get("spoiler", False),
-        "locked": obj.get("locked", False),
-        "stickied": obj.get("stickied", False),
-        "distinguished": obj.get("distinguished"),
-        "edited": obj.get("edited", False),
-        "link_flair_text": obj.get("link_flair_text"),
-        "domain": obj.get("domain"),
-        "gilded": obj.get("gilded", 0),
-        "name": obj.get("name"),
-        "full_link": f"https://reddit.com{obj.get('permalink', '')}" if obj.get('permalink') else None,
-    }
-
-def extract_comment_metadata(obj):
-    """get metadata from a comment"""
-    return {
-        "type": "comment",
-        "id": obj.get("id"),
-        "link_id": obj.get("link_id"),  # submission ID (with prefix)
-        "parent_id": obj.get("parent_id"),  # parent comment/submission ID
-        "body": obj.get("body", ""),
-        "author": obj.get("author", "[deleted]"),
-        "author_flair_text": obj.get("author_flair_text"),
-        "created_utc": obj.get("created_utc"),
-        "created_date": datetime.utcfromtimestamp(int(obj['created_utc'])).strftime("%Y-%m-%d %H:%M:%S"),
-        "subreddit": obj.get("subreddit", ""),
-        "score": obj.get("score", 0),
-        "edited": obj.get("edited", False),
-        "distinguished": obj.get("distinguished"),
-        "stickied": obj.get("stickied", False),
-        "permalink": obj.get("permalink", ""),
-        "is_submitter": obj.get("is_submitter", False),
-        "controversiality": obj.get("controversiality", 0),
-        "gilded": obj.get("gilded", 0),
-        "name": obj.get("name"),
-        "full_link": f"https://reddit.com{obj.get('permalink', '')}" if obj.get('permalink') else None,
-    }
-
-
-def process_file(input_file, output_file):
-    """process a single zst and output matching entries to json"""
-    total = 0
-    matched = 0
-    yearly_counts = defaultdict(lambda: defaultdict(int))
-    chatgpt_period_counts = {"pre_gpt4": 0, "pre_gpt4o": 0, "post_gpt4o": 0}
+def deduplicate_corpus(input_file, output_file, duplicates_file):
+    log.info(f"reading from: {input_file}")
     
-    is_submission = "submission" in input_file.lower()
+    # dictionary: reddit_id -> merged entry
+    unique_entries = {}
     
-    log.info(f"processing {'submissions' if is_submission else 'comments'}: {input_file}")
-
-    with open(output_file, 'w', encoding='utf-8') as jsonfile:
-        for line in read_lines_zst(input_file):
-            total += 1
-            try:
-                obj = json.loads(line)
-                
-                # skips
-                author = obj.get("author", "").lower()
-                if any(bad in author for bad in ["automoderator", "moderator", "modmail", "modteam"]):
-                    continue
-
-                created = datetime.utcfromtimestamp(int(obj['created_utc']))
-                if created.year < START_YEAR:
-                    continue
-
-                if is_submission:
-                    text_field = obj.get("title", "") + " " + obj.get("selftext", "")
-                else:
-                    text_field = obj.get("body", "")
-                
-                if not text_field or not text_field.strip():
-                    continue
-
-                model_found = contains_model(text_field)
-                if model_found:
-                    matched += 1
-                    year = created.year
-                    yearly_counts[year][model_found] += 1
-
-                    # track temporal distribution
-                    if model_found == "chatgpt":
-                        if created < GPT4_RELEASE:
-                            chatgpt_period_counts["pre_gpt4"] += 1
-                        elif created < GPT4O_RELEASE:
-                            chatgpt_period_counts["pre_gpt4o"] += 1
-                        else:
-                            chatgpt_period_counts["post_gpt4o"] += 1
-
-                    if is_submission:
-                        entry = extract_submission_metadata(obj)
-                    else:
-                        entry = extract_comment_metadata(obj)
-                    
-                    entry["model_detected"] = model_found
-                    entry["detection_text"] = text_field[:500]  # store snippet for verification
-                    
-                    # write as ndjson (newline-delimited json)
-                    jsonfile.write(json.dumps(entry) + '\n')
-
-                if total % 100000 == 0:
-                    log.info(f"processed {total:,} lines, matched {matched:,} lines")
-
-            except (KeyError, json.JSONDecodeError, ValueError) as e:
-                continue
-
-    log.info(f"  complete: {input_file}")
-    log.info(f"  total: {total:,}, matched: {matched:,}, output: {output_file}")
-    log.info("  mentions per year and model:")
-    for year in sorted(yearly_counts):
-        for model, count in yearly_counts[year].items():
-            log.info(f"    {year} - {model}: {count:,}")
-
-    if any(chatgpt_period_counts.values()):
-        log.info("  chatgpt temporal breakdown:")
-        for period, count in chatgpt_period_counts.items():
-            log.info(f"    {period}: {count:,}")
+    # track all entries for each ID (including duplicates)
+    all_entries_by_hash = defaultdict(list)
     
-    return matched, yearly_counts, chatgpt_period_counts
-
-
-def main():
-    """process all zst files in the input folder"""
-    Path(OUTPUT_FOLDER).mkdir(parents=True, exist_ok=True)
-    input_path = Path(INPUT_FOLDER)
-    zst_files = list(input_path.glob("*.zst"))
-
-    log.info(f"found {len(zst_files)} ZST files")
+    total_lines = 0
+    entries_before_cutoff = 0
     
-    overall_stats = {
-        "total_matched": 0,
-        "yearly_counts": defaultdict(lambda: defaultdict(int)),
-        "chatgpt_periods": {"pre_gpt4": 0, "pre_gpt4o": 0, "post_gpt4o": 0}
-    }
-    
-    # process each file
-    for zst_file in sorted(zst_files):
-        base_name = zst_file.stem 
-        output_file = Path(OUTPUT_FOLDER) / f"{base_name}_filtered.json"
-        
-        try:
-            matched, yearly_counts, chatgpt_periods = process_file(
-                str(zst_file), 
-                str(output_file)
-            )
+    with open(input_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            total_lines += 1
             
-            overall_stats["total_matched"] += matched
-            for year, models in yearly_counts.items():
-                for model, count in models.items():
-                    overall_stats["yearly_counts"][year][model] += count
-            for period, count in chatgpt_periods.items():
-                overall_stats["chatgpt_periods"][period] += count
+            try:
+                entry = json.loads(line.strip())
                 
-        except Exception as e:
-            log.error(f"(!) error processing {zst_file}: {e}")
-            continue
+                # skip entries before GPT-3.5 release
+                created_date = entry.get("created_date")
+                if created_date:
+                    created = datetime.strptime(created_date, "%Y-%m-%d %H:%M:%S")
+                    if created < GPT35_RELEASE:
+                        entries_before_cutoff += 1
+                        continue
+                
+                # get Reddit ID for deduplication
+                reddit_id = entry.get("id")
+                if not reddit_id:
+                    continue
+                
+                # store this entry in the list for this ID
+                all_entries_by_hash[reddit_id].append(entry)
+                
+                # if this ID already exists, merge model detections
+                if reddit_id in unique_entries:
+                    existing = unique_entries[reddit_id]
+                    
+                    # ensure model_detected is a list
+                    if not isinstance(existing["model_detected"], list):
+                        existing["model_detected"] = [existing["model_detected"]]
+                    
+                    # add new model if not already present
+                    new_model = entry.get("model_detected")
+                    if new_model and new_model not in existing["model_detected"]:
+                        existing["model_detected"].append(new_model)
+                        
+                else:
+                    # first time seeing this ID
+                    model = entry.get("model_detected")
+                    entry["model_detected"] = [model] if model else []
+                    unique_entries[reddit_id] = entry
+                
+                if total_lines % 100000 == 0:
+                    log.info(f"processed {total_lines:,} lines, unique so far: {len(unique_entries):,}")
+                    
+            except (json.JSONDecodeError, ValueError) as e:
+                continue
     
-    log.info("\n" + "="*60)
-    log.info("summary")
-    log.info("="*60)
-    log.info(f"total matched across all files: {overall_stats['total_matched']:,}")
-    log.info("\ncombined mentions per year and model:")
-    for year in sorted(overall_stats['yearly_counts']):
-        for model, count in overall_stats['yearly_counts'][year].items():
-            log.info(f"  {year} - {model}: {count:,}")
+    log.info(f"\ntotal lines read: {total_lines:,}")
+    log.info(f"entries before GPT-3.5 release (filtered): {entries_before_cutoff:,}")
+    log.info(f"unique entries: {len(unique_entries):,}")
+    log.info(f"duplicates removed: {total_lines - entries_before_cutoff - len(unique_entries):,}")
     
-    log.info("\ncombined ChatGPT temporal breakdown:")
-    for period, count in overall_stats['chatgpt_periods'].items():
-        log.info(f"  {period}: {count:,}")
+    # write duplicates to separate file
+    log.info(f"\nwriting duplicates to: {duplicates_file}")
+    duplicate_groups = 0
+    total_duplicates_written = 0
     
-    log.info(f"\noutput files saved to: {OUTPUT_FOLDER}")
-
+    with open(duplicates_file, 'w', encoding='utf-8') as dup_file:
+        for reddit_id, entries_list in all_entries_by_hash.items():
+            if len(entries_list) > 1:
+                # this ID has duplicates
+                duplicate_groups += 1
+                
+                # create a group entry showing all duplicates
+                duplicate_group = {
+                    "reddit_id": reddit_id,
+                    "duplicate_count": len(entries_list),
+                    "text_preview": get_text_content(entries_list[0])[:200],
+                    "created_date": entries_list[0].get("created_date"),
+                    "entries": entries_list
+                }
+                
+                dup_file.write(json.dumps(duplicate_group) + '\n')
+                total_duplicates_written += len(entries_list) - 1  # don't count the first one
+    
+    log.info(f"duplicate groups found: {duplicate_groups:,}")
+    log.info(f"total duplicate entries: {total_duplicates_written:,}")
+    
+    # add temporal inference and write unique entries
+    log.info(f"\nadding temporal model inference...")
+    
+    model_stats = defaultdict(int)
+    inferred_stats = defaultdict(int)
+    multiple_models_count = 0
+    
+    with open(output_file, 'w', encoding='utf-8') as f:
+        for reddit_id, entry in unique_entries.items():
+            # add inferred models based on creation date
+            created_date = entry.get("created_date")
+            if created_date:
+                inferred_models = infer_models_from_date(created_date)
+                entry["models_inferred_temporal"] = inferred_models
+                
+                for model in inferred_models:
+                    inferred_stats[model] += 1
+            else:
+                entry["models_inferred_temporal"] = []
+            
+            # sort model_detected list for consistency
+            if entry["model_detected"]:
+                entry["model_detected"] = sorted(entry["model_detected"])
+                
+                # count entries with multiple models
+                if len(entry["model_detected"]) > 1:
+                    multiple_models_count += 1
+                
+                # stats for detected models
+                for model in entry["model_detected"]:
+                    model_stats[model] += 1
+            
+            f.write(json.dumps(entry) + '\n')
+    
+    log.info(f"\noutput written to: {output_file}")
+    
+    log.info("\nexplicit model counts:")
+    for model, count in sorted(model_stats.items()):
+        log.info(f"  {model}: {count:,}")
+    
+    log.info("\ninferred model counts (temporal):")
+    for model, count in sorted(inferred_stats.items()):
+        log.info(f"  {model}: {count:,}")
+    
+    log.info(f"\nentries mentioning multiple models: {multiple_models_count:,}")
 
 if __name__ == "__main__":
-    main()
+    deduplicate_corpus(INPUT_FILE, OUTPUT_FILE, DUPLICATES_FILE)

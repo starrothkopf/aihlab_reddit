@@ -6,6 +6,8 @@ from collections import defaultdict
 import logging
 import re
 
+# example use: python keyword_sampler.py "goated"
+
 log = logging.getLogger("keyword_sampler")
 log.setLevel(logging.INFO)
 handler = logging.StreamHandler()

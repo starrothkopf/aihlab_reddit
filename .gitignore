@@ -35,3 +35,5 @@ model_verbs_corpus.ndjson
 mini_corpus.ndjson
 mini_corpus_with_scores.ndjson
 mini_corpus_with_deps.ndjson
+combined_corpus_cleaned_inferred_models.ndjson
+combined_corpus_cleaned.ndjson

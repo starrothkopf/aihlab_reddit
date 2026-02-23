@@ -1,0 +1,378 @@
+DUPLICATE ANALYSIS
+================================================================================
+
+Total entries processed: 870,364
+Unique text hashes: 841,368
+Duplicate groups: 9,195
+Total entries in duplicate groups: 38,191
+Excess duplicates (to remove): 28,996
+Keep rate after dedup: 96.67%
+
+DUPLICATE GROUP SIZE DISTRIBUTION:
+--------------------------------------------------------------------------------
+  2 duplicates: 7,063 groups
+  3 duplicates: 1,144 groups
+  4 duplicates: 388 groups
+  5 duplicates: 178 groups
+  6 duplicates: 100 groups
+  7 duplicates: 53 groups
+  8 duplicates: 51 groups
+  9 duplicates: 42 groups
+  10 duplicates: 24 groups
+  11 duplicates: 20 groups
+  12 duplicates: 12 groups
+  13 duplicates: 10 groups
+  14 duplicates: 6 groups
+  15 duplicates: 6 groups
+  16 duplicates: 8 groups
+  17 duplicates: 8 groups
+  18 duplicates: 5 groups
+  19 duplicates: 4 groups
+  20 duplicates: 5 groups
+  21 duplicates: 7 groups
+  22 duplicates: 2 groups
+  23 duplicates: 2 groups
+  24 duplicates: 2 groups
+  25 duplicates: 6 groups
+  27 duplicates: 2 groups
+  28 duplicates: 4 groups
+  29 duplicates: 2 groups
+  30 duplicates: 2 groups
+  31 duplicates: 3 groups
+  32 duplicates: 4 groups
+  34 duplicates: 1 groups
+  36 duplicates: 2 groups
+  43 duplicates: 2 groups
+  46 duplicates: 2 groups
+  47 duplicates: 1 groups
+  55 duplicates: 1 groups
+  57 duplicates: 1 groups
+  60 duplicates: 1 groups
+  61 duplicates: 1 groups
+  62 duplicates: 1 groups
+  64 duplicates: 1 groups
+  68 duplicates: 1 groups
+  69 duplicates: 1 groups
+  71 duplicates: 1 groups
+  72 duplicates: 1 groups
+  75 duplicates: 2 groups
+  77 duplicates: 1 groups
+  83 duplicates: 1 groups
+  111 duplicates: 1 groups
+  129 duplicates: 1 groups
+  157 duplicates: 1 groups
+  175 duplicates: 1 groups
+  219 duplicates: 1 groups
+  274 duplicates: 1 groups
+  582 duplicates: 1 groups
+  1089 duplicates: 1 groups
+  3066 duplicates: 1 groups
+  6974 duplicates: 1 groups
+
+================================================================================
+SAMPLE DUPLICATE GROUPS (first 20):
+================================================================================
+
+
+Group 1 (hash: 922d2b521746c022...):
+  Size: 3 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: what does this have to do with ChatGPT?
+  Entries:
+    [1] ID: nrmleq7, Model: chatgpt, Date: 2025-12-01 00:14:42, Author: CommercialCuts
+    [2] ID: n3wdzaa, Model: chatgpt, Date: 2025-07-18 22:35:05, Author: No-Source-9920
+    [3] ID: krvpf5f, Model: chatgpt, Date: 2024-02-24 05:12:59, Author: julian88888888
+--------------------------------------------------------------------------------
+
+Group 2 (hash: 03ac81d2fbc7bc47...):
+  Size: 6974 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: _URL_
+  Entries:
+    [1] ID: nrmn483, Model: chatgpt, Date: 2025-12-01 00:24:32, Author: snarky_spice
+    [2] ID: nrpfmux, Model: chatgpt, Date: 2025-12-01 13:25:31, Author: Informal_Toe_688
+    [3] ID: nrq79b6, Model: chatgpt, Date: 2025-12-01 16:00:34, Author: thehamlins
+    [4] ID: nrs9fdj, Model: chatgpt, Date: 2025-12-01 22:12:51, Author: og_hays
+    [5] ID: nrtfzq9, Model: chatgpt, Date: 2025-12-02 02:19:28, Author: Tight_Pension_2177
+    [6] ID: nru0mtp, Model: chatgpt, Date: 2025-12-02 04:27:58, Author: myboyfriendstinks1
+    [7] ID: nru0rjr, Model: chatgpt, Date: 2025-12-02 04:28:53, Author: myboyfriendstinks1
+    [8] ID: nru0zaj, Model: chatgpt, Date: 2025-12-02 04:30:25, Author: myboyfriendstinks1
+    [9] ID: nruaod5, Model: chatgpt, Date: 2025-12-02 05:43:28, Author: Glass_Appointment15
+    [10] ID: nrx1rca, Model: chatgpt, Date: 2025-12-02 17:29:07, Author: SpitefulBrains
+    ... and 6964 more
+--------------------------------------------------------------------------------
+
+Group 3 (hash: bc15e6e4d66b87a4...):
+  Size: 1089 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: Your post is getting popular and we just featured it on our Discord! [Come check it out!](_URL_
+
+You've also been given a special flair for your contr...
+  Entries:
+    [1] ID: nrnac8a, Model: chatgpt, Date: 2025-12-01 02:45:07, Author: WithoutReason1729
+    [2] ID: nrpcj81, Model: chatgpt, Date: 2025-12-01 13:05:15, Author: WithoutReason1729
+    [3] ID: nrpxg83, Model: chatgpt, Date: 2025-12-01 15:10:07, Author: WithoutReason1729
+    [4] ID: nrrbo1z, Model: chatgpt, Date: 2025-12-01 19:20:07, Author: WithoutReason1729
+    [5] ID: nrs06py, Model: chatgpt, Date: 2025-12-01 21:25:15, Author: WithoutReason1729
+    [6] ID: nrunoqs, Model: chatgpt, Date: 2025-12-02 07:40:07, Author: WithoutReason1729
+    [7] ID: nruzk8j, Model: chatgpt, Date: 2025-12-02 09:40:13, Author: WithoutReason1729
+    [8] ID: nrvcwrp, Model: chatgpt, Date: 2025-12-02 11:45:10, Author: WithoutReason1729
+    [9] ID: nrwi7iw, Model: chatgpt, Date: 2025-12-02 15:55:12, Author: WithoutReason1729
+    [10] ID: nrxyf1r, Model: chatgpt, Date: 2025-12-02 20:05:16, Author: WithoutReason1729
+    ... and 1079 more
+--------------------------------------------------------------------------------
+
+Group 4 (hash: be79e6d7f5df601f...):
+  Size: 10 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: Nice try ChatGPT.
+  Entries:
+    [1] ID: nrnnyzu, Model: chatgpt, Date: 2025-12-01 04:13:24, Author: kewlbeanz23
+    [2] ID: nrnnzmt, Model: chatgpt, Date: 2025-12-01 04:13:31, Author: kewlbeanz23
+    [3] ID: mxhzjeo, Model: chatgpt, Date: 2025-06-13 03:01:20, Author: Frequent_Thanks583
+    [4] ID: mzce4o4, Model: chatgpt, Date: 2025-06-23 15:28:05, Author: Mrdirtypixel
+    [5] ID: mzoev9z, Model: chatgpt, Date: 2025-06-25 11:16:02, Author: I_Thranduil
+    [6] ID: joofy1g, Model: chatgpt, Date: 2023-06-19 07:27:45, Author: singhapura
+    [7] ID: k0m2oc5, Model: chatgpt, Date: 2023-09-14 21:51:27, Author: dr_tardyhands
+    [8] ID: lfs8260, Model: chatgpt, Date: 2024-07-31 08:27:53, Author: Mappo-Trell
+    [9] ID: jdqxf99, Model: chatgpt, Date: 2023-03-26 14:23:26, Author: BarrySix
+    [10] ID: kv3uefl, Model: chatgpt, Date: 2024-03-16 06:15:31, Author: TJ700
+--------------------------------------------------------------------------------
+
+Group 5 (hash: bf6276c19fea0940...):
+  Size: 2 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: Here you go [_URL_
+  Entries:
+    [1] ID: nrodybp, Model: chatgpt, Date: 2025-12-01 07:46:08, Author: WriterJasonLaw
+    [2] ID: mq2fnos, Model: chatgpt, Date: 2025-05-01 19:02:09, Author: Its_not_a_tumor
+--------------------------------------------------------------------------------
+
+Group 6 (hash: 179440da530b9cd6...):
+  Size: 6 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: Ask ChatGPT what to do
+  Entries:
+    [1] ID: nropg3h, Model: chatgpt, Date: 2025-12-01 09:44:54, Author: Honest_Clothes_8299
+    [2] ID: nc78bqo, Model: chatgpt, Date: 2025-09-03 14:38:53, Author: mildysus
+    [3] ID: nc8nc86, Model: chatgpt, Date: 2025-09-03 18:46:36, Author: DJMOONPICKLES69
+    [4] ID: ncbsv4l, Model: chatgpt, Date: 2025-09-04 05:58:54, Author: Expensive_Orchid_587
+    [5] ID: jjmfx3h, Model: chatgpt, Date: 2023-05-10 16:43:34, Author: ActualAres
+    [6] ID: jw0kv96, Model: chatgpt, Date: 2023-08-13 15:53:05, Author: ComplexTechnician
+--------------------------------------------------------------------------------
+
+Group 7 (hash: 2c766577f622e728...):
+  Size: 32 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: _URL_
+
+_URL_
+  Entries:
+    [1] ID: nrox1ka, Model: chatgpt, Date: 2025-12-01 11:00:32, Author: IAmARageMachine
+    [2] ID: ns4kjsw, Model: chatgpt, Date: 2025-12-03 20:20:16, Author: LostRoamer-7
+    [3] ID: nct1e36, Model: chatgpt, Date: 2025-09-06 22:13:46, Author: wave_engineer
+    [4] ID: nd8ptrm, Model: chatgpt, Date: 2025-09-09 10:44:32, Author: Long_Negotiation7613
+    [5] ID: n8p5qlp, Model: chatgpt, Date: 2025-08-14 18:44:48, Author: DuckFriendly
+    [6] ID: mnkdtkj, Model: chatgpt, Date: 2025-04-17 11:17:55, Author: krzonkalla
+    [7] ID: moecjsc, Model: chatgpt, Date: 2025-04-22 08:18:07, Author: RinzlerXM
+    [8] ID: mr9o2dt, Model: chatgpt, Date: 2025-05-08 16:20:54, Author: Hamra22
+    [9] ID: muc3knc, Model: chatgpt, Date: 2025-05-26 13:03:28, Author: AFComp
+    [10] ID: mwbvifj, Model: chatgpt, Date: 2025-06-06 15:14:49, Author: REAPER-OF-PRIDE
+    ... and 22 more
+--------------------------------------------------------------------------------
+
+Group 8 (hash: 307fc7746c4780f3...):
+  Size: 582 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: ###[View link](_URL_
+
+
+ --- 
+ [**Info**](_URL_ [**Feedback**](_URL_ for savevideo)&#32;|&#32;[**Donate**](_URL_ &#32;|&#32; [**DMCA**](_URL_ removal r...
+  Entries:
+    [1] ID: nrqc7e0, Model: chatgpt, Date: 2025-12-01 16:25:13, Author: SaveVideo
+    [2] ID: ntfymrb, Model: chatgpt, Date: 2025-12-11 10:02:53, Author: SaveVideo
+    [3] ID: nuuysmq, Model: chatgpt, Date: 2025-12-19 13:34:04, Author: SaveVideo
+    [4] ID: nn7l87x, Model: chatgpt, Date: 2025-11-05 09:27:32, Author: SaveVideo
+    [5] ID: nnklru3, Model: chatgpt, Date: 2025-11-07 10:00:02, Author: SaveVideo
+    [6] ID: noiobi8, Model: chatgpt, Date: 2025-11-12 20:41:42, Author: SaveVideo
+    [7] ID: nqoo5mg, Model: chatgpt, Date: 2025-11-25 10:52:12, Author: SaveVideo
+    [8] ID: nrb5cnt, Model: chatgpt, Date: 2025-11-29 01:17:16, Author: SaveVideo
+    [9] ID: nrbp02i, Model: chatgpt, Date: 2025-11-29 03:29:27, Author: SaveVideo
+    [10] ID: nrf2s54, Model: chatgpt, Date: 2025-11-29 18:44:06, Author: SaveVideo
+    ... and 572 more
+--------------------------------------------------------------------------------
+
+Group 9 (hash: 28e26ec085d280e9...):
+  Size: 3 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: I'm satirizing [_URL_
+  Entries:
+    [1] ID: nrr2u8f, Model: chatgpt, Date: 2025-12-01 18:37:00, Author: BaconSky
+    [2] ID: nrr2v23, Model: chatgpt, Date: 2025-12-01 18:37:07, Author: BaconSky
+    [3] ID: nrr2wcv, Model: chatgpt, Date: 2025-12-01 18:37:17, Author: BaconSky
+--------------------------------------------------------------------------------
+
+Group 10 (hash: 7798cab33227821d...):
+  Size: 3066 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: [_URL_
+  Entries:
+    [1] ID: nrtei5p, Model: chatgpt, Date: 2025-12-02 02:11:01, Author: TwinkSlaughter
+    [2] ID: nrvfaod, Model: chatgpt, Date: 2025-12-02 12:04:28, Author: itwouldntbeprudent
+    [3] ID: nry9u3a, Model: chatgpt, Date: 2025-12-02 21:00:58, Author: mf_kadhim
+    [4] ID: nrzxt3o, Model: chatgpt, Date: 2025-12-03 02:27:04, Author: badgirlmonkey
+    [5] ID: nrzz9hw, Model: chatgpt, Date: 2025-12-03 02:35:35, Author: Potential_Strain6892
+    [6] ID: ns53ljn, Model: chatgpt, Date: 2025-12-03 21:51:39, Author: Ok_Record7213
+    [7] ID: ns7n0om, Model: chatgpt, Date: 2025-12-04 07:42:35, Author: DesiEscobar
+    [8] ID: ns7yqt1, Model: chatgpt, Date: 2025-12-04 09:39:02, Author: Dull_Paramedic_6391
+    [9] ID: ns9ivsr, Model: chatgpt, Date: 2025-12-04 15:57:47, Author: Boring_Radio_8400
+    [10] ID: nsa2f98, Model: chatgpt, Date: 2025-12-04 17:32:40, Author: ModernManuh_
+    ... and 3056 more
+--------------------------------------------------------------------------------
+
+Group 11 (hash: b476117132afdd68...):
+  Size: 2 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: Stop using chatgpt
+  Entries:
+    [1] ID: nrwomkb, Model: chatgpt, Date: 2025-12-02 16:26:09, Author: Easy-Organization-24
+    [2] ID: jjo61vm, Model: chatgpt, Date: 2023-05-10 23:30:59, Author: thunderHAARP
+--------------------------------------------------------------------------------
+
+Group 12 (hash: cc791033d4f5a2df...):
+  Size: 5 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: Did you use ChatGPT to write this?
+  Entries:
+    [1] ID: nrxgna7, Model: chatgpt, Date: 2025-12-02 18:39:31, Author: OkChemistry4180
+    [2] ID: ms54buq, Model: chatgpt, Date: 2025-05-13 19:11:03, Author: RomaTheGreat
+    [3] ID: jd2lfl2, Model: chatgpt, Date: 2023-03-21 11:56:49, Author: Alternative_Log3012
+    [4] ID: joaqcw0, Model: chatgpt, Date: 2023-06-16 01:25:26, Author: uzrnym
+    [5] ID: lv8v7wa, Model: chatgpt, Date: 2024-11-03 21:31:58, Author: www_tunnel_snake
+--------------------------------------------------------------------------------
+
+Group 13 (hash: 2a4f1f5dfbc1e8fc...):
+  Size: 2 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: Chatgpt is down for me too
+  Entries:
+    [1] ID: nrxrt95, Model: chatgpt, Date: 2025-12-02 19:33:08, Author: angebun
+    [2] ID: lkd7di4, Model: chatgpt, Date: 2024-08-28 16:44:23, Author: mike_hunter_eyes
+--------------------------------------------------------------------------------
+
+Group 14 (hash: 2fa12cd3dae3445f...):
+  Size: 11 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: ChatGPT is down
+  Entries:
+    [1] ID: nry2w22, Model: chatgpt, Date: 2025-12-02 20:27:12, Author: thoffman2018
+    [2] ID: 1pcimsr, Model: chatgpt, Date: 2025-12-02 19:55:21, Author: PeterEmadz
+    [3] ID: 1pv4t62, Model: chatgpt, Date: 2025-12-25 04:03:06, Author: limsus
+    [4] ID: 1m5i07q, Model: chatgpt, Date: 2025-07-21 12:48:38, Author: One-Zombie-7850
+    [5] ID: jrjhv2h, Model: chatgpt, Date: 2023-07-11 14:45:29, Author: Unchaotic-Justice
+    [6] ID: l73378m, Model: chatgpt, Date: 2024-06-04 16:33:05, Author: GodsHeart2
+    [7] ID: zmyal4, Model: chatgpt, Date: 2022-12-15 22:30:54, Author: Shawnj2
+    [8] ID: 10k32xl, Model: chatgpt, Date: 2023-01-24 11:10:43, Author: gaylnabil
+    [9] ID: 10lhn9l, Model: chatgpt, Date: 2023-01-26 02:57:24, Author: Killerx7c
+    [10] ID: 17qn7y4, Model: chatgpt, Date: 2023-11-08 14:47:47, Author: Amazing-Dependent-39
+    ... and 1 more
+--------------------------------------------------------------------------------
+
+Group 15 (hash: d5e3652a1b92a662...):
+  Size: 47 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: [_URL_
+
+_URL_
+  Entries:
+    [1] ID: nryfsud, Model: chatgpt, Date: 2025-12-02 21:29:41, Author: Background_Sky_9763
+    [2] ID: nq2qsv2, Model: chatgpt, Date: 2025-11-21 19:48:02, Author: recoveringasshole0
+    [3] ID: nr2cw4z, Model: chatgpt, Date: 2025-11-27 15:21:47, Author: ThaDragon195
+    [4] ID: njb8vkp, Model: chatgpt, Date: 2025-10-13 18:04:52, Author: strongbowblade
+    [5] ID: nl48kas, Model: chatgpt, Date: 2025-10-24 11:20:57, Author: Competitive_Ear7824
+    [6] ID: nbsl53i, Model: chatgpt, Date: 2025-09-01 06:16:41, Author: H_G_Bells
+    [7] ID: ncolezn, Model: chatgpt, Date: 2025-09-06 04:43:55, Author: Aggressive_Sell_9228
+    [8] ID: ncyj6c1, Model: chatgpt, Date: 2025-09-07 19:34:33, Author: Pantheon3D
+    [9] ID: ndfd6st, Model: chatgpt, Date: 2025-09-10 11:09:46, Author: Creative_Bookkeeper9
+    [10] ID: nezbkcw, Model: chatgpt, Date: 2025-09-18 23:48:27, Author: Satoshi831
+    ... and 37 more
+--------------------------------------------------------------------------------
+
+Group 16 (hash: 7e711393e81e889c...):
+  Size: 2 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: Turns out it was testing for the ads. Here is one with the **exact same** layout.
+
+[_URL_
+
+_URL_
+  Entries:
+    [1] ID: ns2azoe, Model: chatgpt, Date: 2025-12-03 13:37:36, Author: recoveringasshole0
+    [2] ID: ns2b7du, Model: chatgpt, Date: 2025-12-03 13:38:52, Author: recoveringasshole0
+--------------------------------------------------------------------------------
+
+Group 17 (hash: 2a51f2aa8f4bd680...):
+  Size: 2 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: It's Gemini not ChatGPT
+  Entries:
+    [1] ID: ns34ibe, Model: chatgpt, Date: 2025-12-03 16:11:23, Author: Argod_41
+    [2] ID: nqjm0eh, Model: chatgpt, Date: 2025-11-24 15:43:35, Author: GiantDwarfy
+--------------------------------------------------------------------------------
+
+Group 18 (hash: 37f16e49fa36fabf...):
+  Size: 2 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: *ChatGPT
+  Entries:
+    [1] ID: ns5uc8y, Model: chatgpt, Date: 2025-12-04 00:17:29, Author: Alex23323
+    [2] ID: lls3flr, Model: chatgpt, Date: 2024-09-06 11:43:08, Author: luovahulluus
+--------------------------------------------------------------------------------
+
+Group 19 (hash: 0848831c4813e770...):
+  Size: 2 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: This is not real. If you go into ChatGPT settings then click "apps & connecters." There is nothing in there titled "AIPAC."
+  Entries:
+    [1] ID: ns86kny, Model: chatgpt, Date: 2025-12-04 10:54:09, Author: ShaneSkyrunner
+    [2] ID: nsa18ha, Model: chatgpt, Date: 2025-12-04 17:26:51, Author: ShaneSkyrunner
+--------------------------------------------------------------------------------
+
+Group 20 (hash: 62239e6c0f995ae1...):
+  Size: 175 entries
+  Type: comment
+  Subreddit: ChatGPT
+  Text: ChatGPT
+  Entries:
+    [1] ID: nsa2hqr, Model: chatgpt, Date: 2025-12-04 17:33:01, Author: No_Lengthiness7211
+    [2] ID: nu4r4od, Model: chatgpt, Date: 2025-12-15 09:51:21, Author: D-I-L-F
+    [3] ID: nu506rr, Model: chatgpt, Date: 2025-12-15 11:18:41, Author: nonbonwow
+    [4] ID: nu5l0s6, Model: chatgpt, Date: 2025-12-15 13:48:32, Author: ksprdk
+    [5] ID: nu81ugp, Model: chatgpt, Date: 2025-12-15 21:12:25, Author: jeanluuc
+    [6] ID: nu9pq6l, Model: chatgpt, Date: 2025-12-16 02:50:43, Author: Any_Affect_
+    [7] ID: nwf6hua, Model: chatgpt, Date: 2025-12-28 20:18:37, Author: Unity_Now
+    [8] ID: nwh9ory, Model: chatgpt, Date: 2025-12-29 02:57:16, Author: supervisord
+    [9] ID: 1ptmklr, Model: chatgpt, Date: 2025-12-23 06:09:50, Author: InaamShabir
+    [10] ID: 1pvyl7f, Model: chatgpt, Date: 2025-12-26 07:32:14, Author: Putrid-Doughnut7014
+    ... and 165 more
+--------------------------------------------------------------------------------
